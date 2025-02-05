@@ -17,7 +17,7 @@ function App() {
         data-testid="main-div"
         style={{ backgroundColor: toggleMode }}
       >
-        <h1>CI/CD Test</h1>
+        <h1>CI/CD Testing</h1>
         <button onClick={toggleModeHandler}>Toggle Mode</button>
       </div>
     </div>
