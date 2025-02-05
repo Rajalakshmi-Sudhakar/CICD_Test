@@ -1,40 +1,22 @@
-name: CI/CD for React App
+name: Deploy to Netlify
 
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - main # Adjust this if you want it to trigger on a different branch
 
 jobs:
-  build-and-test:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
-
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+          node-version: "18"
 
       - name: Install dependencies
         run: npm install
@@ -45,9 +27,11 @@ jobs:
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2
         with:
-          publish-dir: "./build"
-          production-branch: "main"
-          deploy-message: "Deploy from GitHub Actions"
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-          netlify-auth-token: "${{ secrets.NETLIFY_AUTH_TOKEN }}"
-          netlify-site-id: "${{ secrets.NETLIFY_SITE_ID }}"
+          publish-dir: ./build # Specify the build directory
+          production-branch: main
+          deploy-message: Deploy from GitHub Actions
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
