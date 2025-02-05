@@ -12,7 +12,6 @@ function App() {
 
   return (
     <div className="main-page-container">
-      <h1>Test</h1>
       <div
         className="main-page"
         data-testid="main-div"
